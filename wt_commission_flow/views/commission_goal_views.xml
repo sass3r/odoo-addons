@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_commission_goal_tree" model="ir.ui.view">
+        <field name="name">commission.goal.tree</field>
+        <field name="model">commission.goal</field>
+        <field name="arch" type="xml">
+            <tree string="Commission Goals">
+                <field name="goal_name"/>
+                <field name="commission_type"/>
+                <field name="commission_percentage"/>
+                <field name="commission_start_date"/>
+                <field name="commission_end_date"/>
+                <field name="min_amount"/>
+                <field name="max_amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_commission_goal_form" model="ir.ui.view">
+        <field name="name">commission.goal.form</field>
+        <field name="model">commission.goal</field>
+        <field name="arch" type="xml">
+            <form string="Commission Goal">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="goal_name" required="1"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="commission_type" widget="radio"/>
+                            <field name="commission_percentage"/>
+                        </group>
+                        <group>
+                            <field name="commission_start_date"/>
+                            <field name="only_start_date"/>
+                            <field name="commission_end_date" attrs="{'invisible': [('only_start_date', '=', True)]}"/>
+                            <field name="min_amount"/>
+                            <field name="only_min_value"/>
+                            <field name="max_amount" attrs="{'invisible': [('only_min_value', '=', True)]}"/>                            
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_commission_goal" model="ir.actions.act_window">
+        <field name="name">Commission Goals</field>
+        <field name="res_model">commission.goal</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Commission Goal
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_commission_goal_root"
+              name="Commission Goals"
+              parent="hr.menu_hr_root"
+              sequence="50" />
+
+    <menuitem id="menu_commission_goal"
+              name="Goals"
+              parent="menu_commission_goal_root"
+              action="action_commission_goal"
+              sequence="10"/>
+
+</odoo>

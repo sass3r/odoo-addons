@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hr_employee_form_commission" model="ir.ui.view">
+        <field name="name">hr.employee.form.commission</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Commission">
+                    <group>
+                        <field name="commission_by"/>
+                    </group>
+                    <field name="commission_line_ids">
+                        <tree>
+                            <field name="commission_name"/>
+                            <field name="commission_percentage"/>
+                            <field name="commission_type"/>
+                            <field name="commission_start_date"/>
+                            <field name="commission_apply_on"/>
+                            <field name="min_amount"/>
+                            <field name="max_amount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <menuitem id="menu_commission_report_root" name="Commission Reports" /> -->
+</odoo>

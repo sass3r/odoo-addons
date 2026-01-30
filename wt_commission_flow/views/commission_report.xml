@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report 
+        id="action_commission_report_pdf"
+        model="commission.report"
+        string="Commission Report"
+        report_type="qweb-pdf"
+        name="wt_commission_flow.report_commission_pdf_template"
+        file="wt_commission_flow.report_commission_pdf_template"
+        print_report_name="'Commission Report - ' + object.employee_id.name"
+    />
+
+    <template id="report_commission_pdf_template">
+        <t t-call="web.html_container">
+            <t t-if="doc">
+                <div>
+                    <h2 class="text-center">Commission Report</h2>
+                    <h3 class="text-center">Employee: <span t-esc="doc.get('employee_name', 'Unknown Employee')"/></h3>
+                    <h3 class="text-center">Total Commission: <span t-esc="doc.get('total_commission', 0.0)"/></h3>
+                </div>
+
+                <t t-set="month_data" t-value="doc.get('sales_data', {})"/>
+
+                <t t-foreach="month_data.items()" t-as="month_group">
+                    <div class="page">
+                        <h4>Month: <span t-esc="month_group[0]"/></h4>
+
+                        <t t-foreach="month_group[1].items()" t-as="role_group">
+                            <h4>Commission as :<span t-esc="role_group[0]"/></h4>
+
+                            <t t-set="commission_type_groups" t-value="role_group[1]"/>
+                            
+                            <t t-foreach="[{'type': 'sales'}, {'type': 'payment'}]" t-as="commission_type">
+                                <h4>Commission Type: <span t-esc="commission_type['type']"/></h4>
+
+                                <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="border: 1px solid black;">Order Name</th>
+                                            <th class="text-center" style="border: 1px solid black;">Date</th>
+                                            <th class="text-center" style="border: 1px solid black;">Total Amount</th>
+                                            <th class="text-center" style="border: 1px solid black;">Commission Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="commission_type_groups" t-as="sale">
+                                            <t t-if="sale['commission_type'] == commission_type['type']">
+                                                <tr>
+                                                    <td style="border: 1px solid black;"><span t-esc="sale['order_name']"/></td>
+                                                    <td style="border: 1px solid black;"><span t-esc="sale['date_order']"/></td>
+                                                    <td style="border: 1px solid black;"><span t-esc="sale['amount_total']"/></td>
+                                                    <td style="border: 1px solid black;"><span t-esc="sale['commission_amount']"/></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

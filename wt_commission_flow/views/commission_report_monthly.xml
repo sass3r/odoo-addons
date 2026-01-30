@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_commission_lines" model="ir.ui.view">
+        <field name="name">Commission Lines</field>
+        <field name="model">commission.report</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="currency_id" invisible="1"/>
+                <field name="employee_id"/>
+                <field name="commission_type"/>
+                <field name="commission_by"/>
+                <field name="order_id"/>
+                <field name="payment_id"/>
+                <field name="amount_total"/>
+                <field name="commission_percentage"/>
+                <field name="commission_amount"/>
+                
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_commission_month_form" model="ir.ui.view">
+        <field name="name">commission.report.month.form</field>
+        <field name="model">commission.report.month</field>
+        <field name="arch" type="xml">
+            <form string="Monthly Commission Report">
+                <header>
+                        <button string="Approve" type="object" name="action_apply_commissions" class="btn-primary"
+                                attrs="{'invisible': [('state', '=', 'applied')]}"/>
+                        <button string="Regenerate" type="object" name="action_regenerate_commissions" class="btn-secondary" attrs="{'invisible': [('state', '=', 'applied')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                <sheet>
+                    
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="year" readonly="1"/>
+                        <field name="month" readonly="1"/>
+
+                    </group>
+                    <notebook>
+                        <page string="Commission Reports">
+                            <button
+                                name="action_view_commission_lines"
+                                string="Download Commission"
+                                type="object"
+                                class="btn-primary"/>
+                            <field name="commission_ids" mode="tree" readonly="1">
+                                <tree>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="employee_id"/>
+                                    <field name="commission_type"/>
+                                    <field name="order_id"/>
+                                    <field name="payment_id"/>
+                                    <field name="amount_total"/>
+                                    <field name="commission_percentage"/>
+                                    <field name="commission_amount"/>
+                                    <field name='month_id'/>                                    
+                                </tree>
+
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_commission_month_tree" model="ir.ui.view">
+        <field name="name">commission.report.month.tree</field>
+        <field name="model">commission.report.month</field>
+        <field name="arch" type="xml">
+            <tree string="Monthly Commission Reports">
+                <field name="name"/>
+                <field name="year"/>
+                <field name="month"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_commission_month" model="ir.actions.act_window">
+        <field name="name">Monthly Commission Reports</field>
+        <field name="res_model">commission.report.month</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': 0}</field>
+    </record>
+
+    <menuitem id="menu_commission_month" parent="hr.menu_hr_root" sequence="100" action="action_commission_month" />
+
+</odoo>

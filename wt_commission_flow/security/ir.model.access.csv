@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+wt_commission_flow.access_commission_report,access_commission_report,wt_commission_flow.model_commission_report,base.group_user,1,1,1,1
+wt_commission_flow.access_commission_report_month,access_commission_report_month,wt_commission_flow.model_commission_report_month,base.group_user,1,1,1,0
+wt_commission_flow.access_commission_line,access_commission_line,wt_commission_flow.model_commission_line,base.group_user,1,1,1,1
+wt_commission_flow.access_commission_goal,access_commission_goal,wt_commission_flow.model_commission_goal,base.group_user,1,1,1,1
